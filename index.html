@@ -25,11 +25,15 @@
         View books
       </p>
     {{/link-to}}
+    {{#link-to "authors"}}
+      <p>
+        View authors
+      </p>
+    {{/link-to}}
   </script>
 
   <script type="text/x-handlebars" id="books">
     <h2>Books</h2>
-    <ul>
       <div class="ui five cards">
         {{#each book in model}}
           <div class="card">
@@ -50,8 +54,68 @@
         {{/each}}
       </div>
       <!-- author, reviews -->
-    </ul>
   </script>
+
+  <script type="text/x-handlebars" id="authors">
+    <h2>Authors</h2>
+    <div class="ui five cards">
+      {{#each author in model}}
+        <div class="card">
+          <div class="image">
+            <img {{bind-attr src=author.image}} alt="author-image" />
+          </div>
+          <div class="content">
+            <div class="header">
+              <h3>{{author.name}}</h3>
+            </div>
+          </div>
+          <div class="description">
+            {{author.bio}}
+          </div>
+          <div class="extra content">
+            {{#each book in author.books}}
+              {{#link-to "books.show" book.id}}
+                <p>
+                  {{book.title}}
+                </p>
+              {{/link-to}}
+            {{/each}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="authors/books">
+    <h2>Books by {{author.name}}</h2>
+    <div class="ui five cards">
+      {{#each author in model}}
+        {{#each book in author.books}}
+          <div class="card">
+            <div class="image">
+              <img {{bind-attr src=book.image}} alt="book-image" />
+            </div>
+            <div class="content">
+              <div class="header">
+                <h3>{{book.title}}</h3>
+              </div>
+            </div>
+            <div class="extra content">
+              <p>{{book.year}}</p>
+              <p>{{book.genre}}</p>
+              <a {{bind-attr href=book.amazonLink}}>Find on Amazon</a>
+            </div>
+          </div>
+        {{/each}}
+      {{/each}}
+    </div>
+  </script>
+
+
+  <script type="text/x-handlebars" id="books/show">
+    {{title}}
+  </script>
+
 
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/ember-template-compiler-1.10.0.js"></script>
@@ -61,6 +125,7 @@
   <script src="js/libs/semantic.min.js"></script>
   <script src="js/app.js"></script>
   <script src="js/router.js"></script>
+  <script src="js/models/author.js"></script>
   <script src="js/models/book.js"></script>
   <!-- to activate the test runner, add the "?test" query string parameter -->
   <script src="tests/runner.js"></script>

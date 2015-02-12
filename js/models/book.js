@@ -4,7 +4,7 @@ App.Book = DS.Model.extend({
   amazonLink: DS.attr('string'),
   genre: DS.attr('string'),
   year: DS.attr('integer'),
-  // author: DS.attr('integer'),
+  author: DS.belongsTo('author'),
   // reviews
 });
 
