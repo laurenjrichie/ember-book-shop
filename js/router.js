@@ -1,3 +1,9 @@
 App.Router.map(function() {
-  // put your routes here
+  this.resource('books');
+});
+
+App.BooksRoute = Ember.Route.extend({
+  model: function() {
+    return this.store.find('book');
+  }
 });

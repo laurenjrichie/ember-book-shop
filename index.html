@@ -5,27 +5,63 @@
   <title>Book Shop</title>
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/semantic.min.css">
 </head>
 <body>
   <script type="text/x-handlebars">
-    <h2>The Book Shop</h2>
+    <div class="ui grid">
+      <div class="twelve wide centered column">
+        <h2>The Book Shop</h2>
 
-    {{outlet}}
+        {{outlet}}
+      </div>
+    </div>
   </script>
 
   <script type="text/x-handlebars" id="index">
+    <h2>Welcome to the book shop.</h2>
+    {{#link-to "books"}}
+      <p>
+        View books
+      </p>
+    {{/link-to}}
+  </script>
+
+  <script type="text/x-handlebars" id="books">
+    <h2>Books</h2>
     <ul>
-    {{#each item in model}}
-      <li>{{item}}</li>
-    {{/each}}
+      <div class="ui five cards">
+        {{#each book in model}}
+          <div class="card">
+            <div class="image">
+              <img {{bind-attr src=book.image}} alt="book-image" />
+            </div>
+            <div class="content">
+              <div class="header">
+                <h3>{{book.title}}</h3>
+              </div>
+            </div>
+            <div class="extra content">
+              <p>{{book.year}}</p>
+              <p>{{book.genre}}</p>
+              <a {{bind-attr href=book.amazonLink}}>Find on Amazon</a>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+      <!-- author, reviews -->
     </ul>
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/ember-template-compiler-1.10.0.js"></script>
   <script src="js/libs/ember-1.10.0.debug.js"></script>
-  <script src="js/router.js"></script>
+  <script src="js/libs/ember-data.js"></script>
+  <script src="js/libs/handlebars-v3.0.0.js"></script>
+  <script src="js/libs/semantic.min.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/models/book.js"></script>
   <!-- to activate the test runner, add the "?test" query string parameter -->
   <script src="tests/runner.js"></script>
 </body>
