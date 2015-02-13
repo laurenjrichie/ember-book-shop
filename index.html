@@ -11,7 +11,22 @@
   <script type="text/x-handlebars">
     <div class="ui grid">
       <div class="fourteen wide centered column">
-        <h2>The Book Shop</h2>
+        {{#link-to "index"}}
+          <h1>The Book Shop</h1>
+        {{/link-to}}
+
+        <div class="ui secondary menu">
+          {{#link-to "books"}}
+            <a class="item"> <!-- add active class? + below -->
+              Books
+            </a>
+          {{/link-to}}
+          {{#link-to "authors"}}
+            <a class="item">
+              Authors
+            </a>
+          {{/link-to}}
+        </div>
 
         {{outlet}}
       </div>
@@ -19,24 +34,14 @@
   </script>
 
   <script type="text/x-handlebars" id="index">
-    <h2>Welcome to the book shop.</h2>
-    {{#link-to "books"}}
-      <p>
-        View books
-      </p>
-    {{/link-to}}
-    {{#link-to "authors"}}
-      <p>
-        View authors
-      </p>
-    {{/link-to}}
+    <h3>Welcome.</h3>
   </script>
 
   <script type="text/x-handlebars" id="books">
     <h2>Books</h2>
     <div class="ui grid">
       <div class="twelve wide column">
-        <div class="ui five cards">
+        <div class="ui four cards">
           {{#each book in model}}
             <div class="card">
               <div class="image">
@@ -46,13 +51,12 @@
                 <div class="header">
                   <h3>{{book.title}}</h3>
                 </div>
+                <p>{{book.author.name}}  |  {{book.year}}</p>
+                <p>{{book.genre}}</p>
               </div>
               <div class="extra content">
-                <p>{{book.year}}</p>
-                <p>{{book.genre}}</p>
-                <p>{{book.author.name}}</p>
                 <p>
-                  {{#link-to "books.show" book.id}}  <!-- NOT WORKING -->
+                  {{#link-to "books.show" book}}
                     Read reviews
                   {{/link-to}}
                 </p>
@@ -66,8 +70,10 @@
         {{outlet}}
       </div>
     </div>
+  </script>
 
-
+  <script type="text/x-handlebars" id="books/index">
+    <h3>For reviews, click the "read reviews" links.</h3>
   </script>
 
   <script type="text/x-handlebars" id="authors">
@@ -82,13 +88,16 @@
             <div class="header">
               <h3>{{author.name}}</h3>
             </div>
-          </div>
-          <div class="description">
-            {{author.bio}}
+            <div class="description">
+              {{author.bio}}
+            </div>
           </div>
           <div class="extra content">
+            <p>
+              BOOKS:
+            </p>
             {{#each book in author.books}}
-              {{#link-to "books.show" book.id}} <!-- NOT WORKING -->
+              {{#link-to "books.show" book}} <!-- not what I want -->
                 <p>
                   {{book.title}}
                 </p>
@@ -112,6 +121,7 @@
             <div class="content">
               <div class="header">
                 <h3>{{book.title}}</h3>
+
               </div>
             </div>
             <div class="extra content">
@@ -125,10 +135,21 @@
     </div>
   </script>
 
-
   <script type="text/x-handlebars" id="books/show">
-    <h2>{{title}}</h2>
+    <h2>Reviews for:</h2>
+    <h3>{{title}}</h3>
+      {{#each review in model.reviews}}
+        <p>
+          {{review.text}}
+        </p>
+        <p>
+          -- {{review.userName}}
+        </p>
+      {{/each}}
+  </script>
 
+  <script type="text/x-handlebars" id="book"> <!-- right? -->
+    <h2>BOOK TITLE and reviews</h2>
   </script>
 
 
